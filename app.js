@@ -6,6 +6,9 @@ var bodyParser = require('body-parser');
 var mysql = require('mysql');
 var _ = require('lodash');
 var Promise = require('bluebird');
+Promise.onPossiblyUnhandledRejection(function(error) {
+  throw error;
+});
 
 exports.server = function() {
   var app = express();

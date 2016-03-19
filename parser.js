@@ -1,7 +1,11 @@
 var cheerio = require('cheerio');
 var request = require('request');
 var Promise = require('bluebird');
+Promise.onPossiblyUnhandledRejection(function(error) {
+  throw error;
+});
 var _ = require('lodash');
+var sleep = require('sleep');
 Promise.promisifyAll(request);
 
 
@@ -52,7 +56,9 @@ function getAllSerialNumer(search) {
       var PromiseArray = [];
       serialNumbers = serialNumbers.concat(result.numbers);
       while (currentPage <= last + 1) {
+        sleep.sleep(1);
         PromiseArray.push(getSerialNumberInAPage(currentPage));
+        console.log(currentPage)
         currentPage += 1;
       }
       return Promise.all(PromiseArray);
